@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}
+Student Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- Display a welcome message with the student's name -->
+  <h1>Welcome {{ user.first_name }} {{ user.second_name }}!</h1>
+  <!-- Display information about the student's assigned class -->
+  <h4>
+    You are assigned to class {{ class_name }}, {{ class_profile }} profile
+  </h4>
+</div>
+
+<!-- Section for displaying all subjects for which a logged in student is enrolled -->
+<h3>All subjects panel</h3>
+<div class="grade-section">
+  <h5>Your recent grade</h5>
+  <div class="grade-box">
+    <!-- Display information about the student's latest grade -->
+    <p>
+      You got <strong>{{ latest_grade_info[0] }}</strong> on
+      <strong>{{ latest_grade_info[1] }}</strong> by {{ latest_grade_info[2] }}
+    </p>
+  </div>
+</div>
+<div class="grade-section">
+  <h5>Your total average</h5>
+  <div class="grade-box">
+    <!-- Display information about the student's total average -->
+    <p>
+      Your total average is
+      <strong>{{ '{:.2f}'.format(total_average) }}</strong>
+    </p>
+  </div>
+</div>
+<div class="grade-section">
+  <h5>Your position in class ranking</h5>
+  <div class="grade-box">
+    <!-- Display information about the student's position in class ranking -->
+    <p>
+      Your position is <strong>{{ student_rank }}</strong> out of
+      <strong>{{ num_students }} </strong>students
+    </p>
+  </div>
+</div>
+
+<!-- Section for displaying the grade ranking chart -->
+<div class="grade-section">
+  <h4>Below you can find chart presenting your average grade from each subject</h4>
+  <!-- Display the grade chart image -->
+  <img
+    src="data:image/png;base64,{{ plot_data_s }}"
+    alt="Grades Chart"
+    width="1200"
+    height="400"
+  />
+</div>
+
+<!-- Dropdown for selecting a subject -->
+<div class="container">
+  <form method="POST" action="{{ url_for('student_dashboard') }}">
+    <label for="subjectDropdown"><h4>List of subjects:</h4></label>
+    <select id="subjectDropdown" name="selected_subject">
+      <!-- Option for each subject in the dropdown -->
+      {% for subject in subjects %}
+      <option value="{{ subject[0] }}">{{ subject[1] }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Select Subject</button>
+  </form>
+</div>
+
+{% if selected_subject %}
+<!-- Display information about the selected subject -->
+<div class="grade-section">
+  <h5>Your average from {{ selected_subject[1] }}</h5>
+  <div class="grade-box">
+    {% if subject_average is not none and subject_average != 0 %}
+    <!-- Display the student's average for the selected subject -->
+    <p>Your average is <strong>{{ subject_average|round(2) }}</strong></p>
+    {% else %}
+    <!-- Display message if no grades available for the selected subject -->
+    <p><strong>No grades available </strong>for the selected subject.</p>
+    {% endif %}
+  </div>
+</div>
+<div class="grade-section">
+  <h5>Your class average from {{ selected_subject[1] }}</h5>
+  <div class="grade-box">
+    {% if class_subject_avg is not none and class_subject_avg != 0 %}
+    <!-- Display the class average for the selected subject -->
+    <p>Class average is <strong>{{ class_subject_avg|round(2) }}</strong></p>
+    {% else %}
+    <!-- Display message if no grades available for the selected subject in the class -->
+    <p>
+      <strong>No grades available </strong>for the selected subject in the
+      class.
+    </p>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

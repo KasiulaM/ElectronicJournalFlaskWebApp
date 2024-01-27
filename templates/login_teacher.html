@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Teacher's view
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+  <!-- Form for teacher login -->
+
+  <!-- Heading for the form -->
+  <h3 align="center">Teacher's login</h3>
+
+  <!-- Form group for entering email address -->
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      placeholder="Enter email"
+    />
+  </div>
+
+  <!-- Form group for entering password -->
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      name="password"
+      placeholder="Enter password"
+    />
+  </div>
+
+  <!-- Button for submitting the login form -->
+  <br />
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>
+{% endblock %}

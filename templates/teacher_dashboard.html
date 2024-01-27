@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Teacher Dashboard
+{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ user.first_name }} {{ user.second_name }}!</h1>
+<h4>Teached subject: {{ subject_name }}</h4>
+
+<!-- Dropdown for selecting the class -->
+<div class="container">
+  <form method="POST" action="{{ url_for('teacher_dashboard') }}">
+    <label for="classDropdown"><h3>List of classes:</h3></label>
+    <select id="classDropdown" name="selected_class">
+      {% for classes_taught in classes_taught %}
+      <!-- Option for each class teached by logged in teacher -->
+      <option value="{{ classes_taught[0] }}">
+        {{ classes_taught [1]}} - {{ classes_taught [2]}}
+      </option>
+      {% endfor %}
+    </select>
+    <button type="submit" name="select_class">Select Class</button>
+  </form>
+</div>
+
+{% if selected_class %}
+<!-- Display information for the selected class -->
+<h4>Selected class: {{ selected_class[1] }} ({{ selected_class[2] }})</h4>
+
+<!-- Section for displaying class statistics (average, median, mode) -->
+<div class="grade-section">
+  <h5>Class {{ selected_class[1] }} average</h5>
+  <div class="grade-box">
+    {% if class_average is not none and class_average != 0 %}
+    <!-- Display class average if available -->
+    <p>
+      Class average is <strong>{{ class_average|round(2) }}</strong> from {{
+      subject_name }}
+    </p>
+    {% else %}
+    <!-- Display message if no grades available for the selected class -->
+    <p><strong>No grades available </strong>for the selected class.</p>
+    {% endif %}
+  </div>
+</div>
+<div class="grade-section">
+  <h5>Class {{ selected_class[1] }} median</h5>
+  <div class="grade-box">
+    {% if class_median is not none and class_median != 0 %}
+    <!-- Display class median if available -->
+    <p>
+      Class median is <strong>{{ class_median}}</strong> from {{ subject_name }}
+    </p>
+    {% else %}
+    <!-- Display message if no grades available for the selected class -->
+    <p><strong>No grades available </strong>for the selected class.</p>
+    {% endif %}
+  </div>
+</div>
+<div class="grade-section">
+  <h5>Class {{ selected_class[1] }} mode</h5>
+  <div class="grade-box">
+    {% if class_mode is not none and class_mode != 0 %}
+    <!-- Display class mode if available -->
+    <p>
+      Class mode is <strong>{{ class_mode}}</strong> from {{ subject_name }}
+    </p>
+    {% else %}
+    <!-- Display message if no grades available for the selected class -->
+    <p><strong>No grades available </strong>for the selected class.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% if highest_avg_student %}
+<!-- Display information about the student with the highest average -->
+<div class="grade-section">
+  <h5>Highest Average in {{ subject_name }}</h5>
+  <div class="grade-box">
+    <p>
+      The student with the highest average is
+      <strong>{{ highest_avg_student[1] }} {{ highest_avg_student[2] }}</strong>
+      with an average of {{ highest_avg_student[3]|round(2) }}
+    </p>
+  </div>
+</div>
+{% endif %}
+
+<!-- Display information about the student with the lowest average -->
+<div class="grade-section">
+  <h5>Lowest Average in {{ subject_name }}</h5>
+  <div class="grade-box">
+    {% if lowest_avg_student %}
+    <p>
+      The student with the lowest average is
+      <strong>{{ lowest_avg_student[1] }} {{ lowest_avg_student[2] }}</strong>
+      with an average of {{ lowest_avg_student[3]|round(2) }}
+    </p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Section for displaying the grade ranking chart -->
+<div class="grade-section">
+  <h4>
+    Below you can find ranking based on average grade from {{ subject_name }}
+  </h4>
+  <!-- Display the grade chart image -->
+  <img
+    src="data:image/png;base64,{{ plot_data_t }}"
+    alt="Grades Chart"
+    width="1000"
+    height="700"
+  />
+</div>
+{% endif %}
+
+{% endblock %}

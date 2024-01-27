@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Add new User
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+  <!-- Form for adding a new user -->
+  <h3 align="center">Adding new User</h3>
+
+  <!-- Radio buttons for selecting the user role -->
+  <div class="form-group">
+    <label for="role">Role:</label>
+    <label for="student">Student</label>
+    <input type="radio" id="student" name="role" value="student" required />
+    <label for="teacher">Teacher</label>
+    <input type="radio" id="teacher" name="role" value="teacher" required /><br />
+  </div>
+
+  <!-- Form fields for user details -->
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required />
+  </div>
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" required />
+  </div>
+  <div class="form-group">
+    <label for="secondName">Second Name</label>
+    <input type="text" class="form-control" id="secondName" name="secondName" placeholder="Enter second name" required />
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required />
+  </div>
+
+  <!-- Dropdowns for selecting class and subject based on the user role -->
+  <div class="form-group" id="classGroup">
+    <label for="classes">Class</label>
+    <select class="form-control" id="classes" name="classes" required>
+      {% for class in classes %}
+      <option value="{{ class[0] }}">{{ class[1] }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group" id="subjectGroup">
+    <label for="subject">Subject</label>
+    <select class="form-control" id="subjects" name="subjects" required>
+      {% for subject in subjects %}
+      <option value="{{ subject[0] }}">{{ subject[1] }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Button for submitting the form -->
+  <br />
+  <button type="submit" class="btn btn-primary">Add User</button>
+
+  <!-- JavaScript for updating visibility of class and subject dropdowns based on user role -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      updateVisibility();
+      var roleRadios = document.querySelectorAll('input[name="role"]');
+      roleRadios.forEach(function (radio) {
+        radio.addEventListener("change", updateVisibility);
+      });
+
+      function updateVisibility() {
+        var classGroup = document.getElementById("classGroup");
+        var subjectGroup = document.getElementById("subjectGroup");
+        var studentRadio = document.getElementById("student");
+        var teacherRadio = document.getElementById("teacher");
+
+        if (studentRadio.checked) {
+          classGroup.style.display = "block";
+          subjectGroup.style.display = "none";
+        } else if (teacherRadio.checked) {
+          subjectGroup.style.display = "block";
+          classGroup.style.display = "none";
+        } else {
+          classGroup.style.display = "none";
+          subjectGroup.style.display = "none";
+        }
+      }
+    });
+  </script>
+</form>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Welcome to the Electronic Journal
+{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Electronic Journal!</h1>
+<div class="container">
+  <!-- Image -->
+  <img
+    src="/static/jounral.jpg"
+    alt="journal"
+    style="width: 1000px; height: 250px"
+  />
+  <p>Source: Google.com</p>
+  <!-- Introduction and purpose of the platform -->
+  <p>
+    Thank you for choosing our electronic journal platform. This system is
+    designed to provide a seamless experience for students, teachers, and
+    administrators to manage and access academic information efficiently.
+  </p>
+  <!-- Who is the platform for? -->
+  <h2>Who is this platform for?</h2>
+  <p>
+    This platform caters to the needs of students, teachers, and administrators.
+    Whether you are here to view grades, manage classes, or oversee the academic
+    progress of students, we've got you covered.
+  </p>
+  <!-- Login instructions -->
+  <h2>Login Instructions</h2>
+  <p>
+    To get started, please use the navigation bar above and click on the
+    appropriate login type:
+  </p>
+  <ul>
+    <!-- Student login instructions -->
+    <li>
+      <strong>Student Login:</strong> Access your grades and academic
+      information. Click on "Student's view" in the left-up corner.
+    </li>
+    <!-- Teacher login instructions -->
+    <li>
+      <strong>Teacher Login:</strong> Manage classes, enter grades, and interact
+      with students. Click on "Teacher's view" in the left-up corner.
+    </li>
+    <!-- Admin login instructions -->
+    <li>
+      <strong>Admin Login:</strong> Oversee the overall functioning of the
+      electronic journal. Click on "Admin's view'" in the left-up corner.
+    </li>
+  </ul>
+  <!-- Contact information for account creation and support -->
+  <p>
+    If you don't have an account, please contact the administration to get the
+    necessary credentials.
+    <br />Contact the administration at:
+    <a href="mailto:admin@admin.uw.edu.pl">admin@admin.uw.edu.pl</a>
+  </p>
+  <!-- Support team contact information -->
+  <p>
+    If you encounter any issues or have questions, feel free to contact our
+    support team.
+    <br />Contact our support team at:
+    <a href="mailto:m.miszkiel2@student.uw.edu.pl">Marcin Miszkiel</a>
+    <br />Contact our support team at:
+    <a href="mailto:k.mocio@student.uw.edu.pl">Katarzyna Mocio</a>
+  </p>
+</div>
+{% endblock %}
