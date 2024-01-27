@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %} 
+  Add Subject 
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- Section for displaying existing subjects in a table -->
+  <h3>List of existing subjects</h3>
+  <table id="subjectTable" class="display">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for subject in vsubject %}
+      <!-- Loop through existing subjects and populate the table rows -->
+      <tr>
+        <td>{{ subject[0] }}</td>
+        <td>{{ subject[1] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Form for adding a new subject -->
+  <form method="post" action="{{ url_for('add_subject') }}">
+    <div class="form-group">
+      <label for="newsubject">New Subject Name:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="newsubject"
+        name="newsubject"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Subject</button>
+  </form>
+</div>
+
+<!-- jQuery and DataTables scripts for table functionality -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables styles -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css"
+/>
+
+<!-- Custom styles for the DataTable -->
+<style>
+  table.display {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  table.display th,
+  table.display td {
+    border: 1px solid #001f3f;
+    padding: 8px;
+    text-align: left;
+  }
+  table.display th {
+    background-color: #001f3f;
+    color: #ffffff;
+  }
+</style>
+
+<!-- Initialize DataTable when the document is ready -->
+<script>
+  $(document).ready(function () {
+    $("#subjectTable").DataTable();
+  });
+</script>
+{% endblock %}

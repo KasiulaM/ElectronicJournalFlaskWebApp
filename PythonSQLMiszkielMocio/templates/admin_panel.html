@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Admin Panel
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- Welcome message and description of the Admin Panel -->
+  <h1>Welcome to the Admin Panel, {{ user.first_name }}!</h1>
+  <p>
+    Admins can create user accounts. This includes students and teachers. They
+    can also assign teachers to classes based on their profession (subject).
+  </p>
+
+  <!-- Table for displaying a list of users -->
+  <h3>List of Users</h3>
+  <table id="userTable" class="display">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in vuser %}
+      <!-- Loop through users and populate the table rows -->
+      <tr>
+        <td>{{ user[0] }}</td>
+        <td>{{ user[1] }}</td>
+        <td>{{ user[2] }}</td>
+        <td>{{ user[3] }}</td>
+        <td>{{ user[4] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Similar tables for subjects, classes, grades, and assignments -->
+  <h3>List of Subjects</h3>
+  <table id="subjectTable" class="display">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for subject in vsubject %}
+      <!-- Loop through subjects and populate the table rows -->
+      <tr>
+        <td>{{ subject[0] }}</td>
+        <td>{{ subject[1] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>List of Classes</h3>
+  <table id="classTable" class="display">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Profile</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for class in vclass %}
+      <!-- Loop through classes and populate the table rows -->
+      <tr>
+        <td>{{ class[0] }}</td>
+        <td>{{ class[1] }}</td>
+        <td>{{ class[2] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>List of Grades</h3>
+  <table id="gradesTable" class="display">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Grade Value</th>
+        <th>Weight</th>
+        <th>ID: Student</th>
+        <th>ID: Teacher</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for grade in vgrade %}
+      <!-- Loop through grades and populate the table rows -->
+      <tr>
+        <td>{{ grade[0] }}</td>
+        <td>{{ grade[1] }}</td>
+        <td>{{ grade[2] }}</td>
+        <td>{{ grade[3] }}</td>
+        <td>{{ grade[4] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>List of Assignments</h3>
+  <table id="assignTable" class="display">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Teacher</th>
+        <th>Class and profile</th>
+        <th>Subject</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for assign in vassign %}
+      <!-- Loop through assignments and populate the table rows -->
+      <tr>
+        <td>{{ assign[0] }}</td>
+        <td>{{ assign[1] }}</td>
+        <td>{{ assign[2] }}</td>
+        <td>{{ assign[3] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- jQuery and DataTables scripts for table functionality -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables styles -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css" />
+
+<!-- Custom styles for the DataTable -->
+<style>
+  table.display {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  table.display th,
+  table.display td {
+    border: 1px solid #001f3f;
+    padding: 8px;
+    text-align: left;
+  }
+  table.display th {
+    background-color: #001f3f;
+    color: #ffffff;
+  }
+</style>
+
+<!-- Initialize DataTables for each table when the document is ready -->
+<script>
+  $(document).ready(function () {
+    $("#userTable").DataTable();
+    $("#subjectTable").DataTable();
+    $("#classTable").DataTable();
+    $("#gradesTable").DataTable();
+    $("#assignTable").DataTable();
+  });
+</script>
+{% endblock %}

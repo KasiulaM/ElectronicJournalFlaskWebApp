@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Meta tags for character set and viewport -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Bootstrap CSS and Font Awesome CSS links -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      /* Styling for the grade sections */
+      .grade-section {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+    
+      /* Styling for the grade boxes */
+      .grade-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 10px;
+      }
+    
+      /* Styling for the main header */
+      h1 {
+        text-align: center;
+        margin-top: 30px;
+      }
+    
+      /* Styling for sub-headers */
+      h3 {
+        margin-top: 100px;
+        text-align: center;
+      }
+    
+      /* Styling for additional sub-headers */
+      h4 {
+        margin-top: 20px;
+        padding: 30px;
+        text-align: center;
+      }
+    </style>
+    
+    <!-- Title of the page, with a block for customization -->
+    <title>{% block title %}Home{% endblock %}</title>
+  </head>
+  <body>
+    <!-- Navigation bar using Bootstrap -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <!-- Toggle button for responsive design -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- Navigation links based on user role -->
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+          {% if current_user.is_authenticated and current_user.role == 'teacher' %}
+          <!-- Teacher links -->
+          <a class="nav-item nav-link" id="teacher_dashboard" href="/teacher_dashboard">Teacher dashboard</a>
+          <a class="nav-item nav-link" id="enter_grades" href="/enter_grades">Enter Grades</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+          {% elif current_user.is_authenticated and current_user.role == 'student' %}
+          <!-- Student links -->
+          <a class="nav-item nav-link" id="student_dashboard" href="/student_dashboard">Student Dashboard</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+          {% elif current_user.is_authenticated and current_user.role == 'admin' %}
+          <!-- Admin links -->
+          <a class="nav-item nav-link" id="admin_panel" href="/admin_panel">Admin Panel</a>
+          <a class="nav-item nav-link" id="add_user" href="/add_user">Adding New User</a>
+          <a class="nav-item nav-link" id="add_subject" href="/add_subject">Add New Subject</a>
+          <a class="nav-item nav-link" id="assign_teacher_to_class" href="/assign_teacher_to_class">Assign Teacher to Class</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+          {% else %}
+          <!-- Default links for non-authenticated users -->
+          <a class="nav-item nav-link" id="login_teacher" href="/login_teacher">Teacher's view</a>
+          <a class="nav-item nav-link" id="login_student" href="/login_student">Student's view</a>
+          <a class="nav-item nav-link" id="login_admin" href="/login_admin">Admin's view</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <!-- Flash messages section for displaying alerts -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if category == 'error' %}
+            <!-- Error alert -->
+            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% else %}
+            <!-- Success alert -->
+            <div class="alert alert-success alter-dismissable fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Main content container -->
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap and related JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
