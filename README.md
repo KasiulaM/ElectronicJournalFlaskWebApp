@@ -6,7 +6,7 @@ The Electronic Journal is a Flask-based web application designed to streamline a
 
 ## Installation and usage
 
-1. Clone the repository:
+1. Clone the repository: https://github.com/mqrcinoo/ElectronicJournalFlaskWebApp.git
 2. Install all necessery packages (install packages folder and installer.ipynb file)
 3. Run the main.py file and click the link printed in the terminal to the local host.
 4. To login as any user write an email and password in appropirate login section. Passwords are encrypted so for every user the password is first letter of name and surname e.g. Jan Kowalski's password is jk.
